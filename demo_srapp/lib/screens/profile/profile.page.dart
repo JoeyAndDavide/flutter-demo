@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:demo_srapp/themes/custom_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -10,6 +11,8 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  final bodyTextAutoSizeGroup = AutoSizeGroup();
+
   @override
   Widget build(BuildContext context) {
     const String patronName = 'FEI FEI HO';
@@ -35,9 +38,9 @@ class _ProfilePageState extends State<ProfilePage> {
                 children: [
                   Text(
                     patronName,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText1!
+                    style: Provider.of<CustomTheme>(context)
+                        .theme
+                        .profileBodyText1
                         .copyWith(fontSize: 20),
                   ),
                 ],
@@ -79,6 +82,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                       ),
                       const SizedBox(height: 10),
+                      /*
                       Row(
                         children: [
                           Column(
@@ -105,6 +109,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         ],
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       ),
+                      */
                     ],
                   ),
                 ),
@@ -177,7 +182,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ElevatedButton(
                 onPressed: () {
                   Provider.of<CustomTheme>(context, listen: false)
-                      .toggleTheme();
+                      .changeThemeType(ThemeType.base);
                 },
                 child: const Text('Text'),
               ),

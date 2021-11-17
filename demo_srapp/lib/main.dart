@@ -20,13 +20,9 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    final theme = Provider.of<CustomTheme>(context);
-
     return MaterialApp(
       title: 'SR App - Prototype',
-      theme: CustomTheme.lightTheme,
-      darkTheme: CustomTheme.darkTheme,
-      themeMode: theme.currentTheme,
+      theme: Provider.of<CustomTheme>(context).theme.theme,
       home: const ProfilePage(),
     );
   }
