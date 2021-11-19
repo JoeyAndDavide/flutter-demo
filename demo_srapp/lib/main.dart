@@ -1,5 +1,6 @@
-import 'package:demo_srapp/screens/profile/profile.page.dart';
-import 'package:demo_srapp/themes/custom_theme.dart';
+import 'package:demo_srapp/shared/app_login.store.dart';
+import 'package:demo_srapp/shared/app_theme.store.dart';
+import 'package:demo_srapp/wrapper.page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -7,7 +8,8 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider<CustomTheme>(create: (_) => CustomTheme()),
+        ChangeNotifierProvider<AppLogin>(create: (_) => AppLogin()),
+        ChangeNotifierProvider<AppTheme>(create: (_) => AppTheme()),
       ],
       child: const MyApp(),
     ),
@@ -22,8 +24,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'SR App - Prototype',
-      theme: Provider.of<CustomTheme>(context).theme.theme,
-      home: const ProfilePage(),
+      theme: Provider.of<AppTheme>(context).currentTheme.theme,
+      home: const Wrapper(),
     );
   }
 }

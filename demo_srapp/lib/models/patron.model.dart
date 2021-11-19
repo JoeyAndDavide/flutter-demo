@@ -1,12 +1,14 @@
+enum PatronTier { gold1, apex }
+
 class Patron {
-  final String patronID;
-  final String patronName;
-  final String currentTier;
-  final String currentTierExpDate;
+  final String pid;
+  final String name;
+  final PatronTier tier;
+  final String tierExpDate;
 
   Patron(
-      {required this.patronID,
-      required this.patronName,
-      required this.currentTier,
-      required this.currentTierExpDate});
+      {required this.pid,
+      required this.name,
+      required this.tier,
+      required this.tierExpDate});
 }
