@@ -1,9 +1,9 @@
-import 'package:demo_srapp/models/patron.model.dart';
+import 'package:demo_srapp/models/patron.dart';
 
-class AuthenticateService {
+class AuthService {
   Future<Patron> login(String pid) async {
     return Future.delayed(
-      const Duration(seconds: 1),
+      const Duration(seconds: 2),
       () {
         if (pid == '4988800') {
           return Patron(

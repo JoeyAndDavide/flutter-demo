@@ -1,6 +1,7 @@
-import 'package:demo_srapp/shared/app_login.store.dart';
-import 'package:demo_srapp/shared/app_theme.store.dart';
-import 'package:demo_srapp/wrapper.page.dart';
+import 'package:demo_srapp/utils/utils.dart';
+import 'package:demo_srapp/view_models/auth_viewmodel.dart';
+import 'package:demo_srapp/view_models/app_theme_viewmodel.dart';
+import 'package:demo_srapp/views/profile.screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -8,8 +9,18 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider<AppLogin>(create: (_) => AppLogin()),
-        ChangeNotifierProvider<AppTheme>(create: (_) => AppTheme()),
+        ChangeNotifierProvider<AuthViewModel>(create: (_) => AuthViewModel()),
+        ChangeNotifierProxyProvider<AuthViewModel, AppThemeViewModel>(
+          create: (BuildContext context) => AppThemeViewModel(
+              appThemeType: Utils.mapPatronTierTheme(
+                  Provider.of<AuthViewModel>(context, listen: false)
+                      .patron
+                      ?.tier)),
+          update: (BuildContext context, AuthViewModel auth,
+                  AppThemeViewModel? appTheme) =>
+              AppThemeViewModel(
+                  appThemeType: Utils.mapPatronTierTheme(auth.patron?.tier)),
+        ),
       ],
       child: const MyApp(),
     ),
@@ -24,8 +35,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'SR App - Prototype',
-      theme: Provider.of<AppTheme>(context).currentTheme.theme,
-      home: const Wrapper(),
+      theme: context.watch<AppThemeViewModel>().themeData,
+      home: const ProfilePage(),
     );
   }
 }

@@ -1,7 +1,7 @@
-import 'package:demo_srapp/models/patron.model.dart';
+import 'package:demo_srapp/models/patron.dart';
 import 'package:flutter/material.dart';
 
-class AppLogin extends ChangeNotifier {
+class AuthViewModel extends ChangeNotifier {
   Patron? _patron;
 
   Patron? get patron {
