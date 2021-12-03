@@ -1,6 +1,6 @@
 import 'package:demo_srapp/models/patron.dart';
 
-class AuthService {
+class AuthRepository {
   Future<Patron> login(String pid) async {
     return Future.delayed(
       const Duration(seconds: 2),

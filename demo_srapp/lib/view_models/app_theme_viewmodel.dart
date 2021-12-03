@@ -17,6 +17,13 @@ class AppThemeViewModel extends ChangeNotifier {
   static const Color _colorWhite = Colors.white;
   static const Color _colorBlack = Colors.black;
 
+  //Font sizes
+  static const double _fontSizeXS = 2.0;
+  static const double _fontSizeS = 5.0;
+  static const double _fontSizeM = 8.0;
+  static const double _fontSizeL = 15.0;
+  static const double _fontSizeXL = 20.0;
+
   // ThemeData
   ThemeData get themeData {
     switch (appThemeType ?? AppThemeType.gold1) {
@@ -72,4 +79,10 @@ class AppThemeViewModel extends ChangeNotifier {
       shape: MaterialStateProperty.all(const StadiumBorder()),
     );
   }
+
+  TextStyle get profileHeaderTitleTextStyle =>
+      const TextStyle(fontSize: _fontSizeXL, color: _colorWhite);
+
+  TextStyle get profileHeaderBodyTextStyle =>
+      const TextStyle(fontSize: _fontSizeL, color: _colorGrey1);
 }

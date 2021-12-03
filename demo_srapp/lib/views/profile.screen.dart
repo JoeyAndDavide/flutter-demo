@@ -1,10 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:demo_srapp/constants/styles/font_sizes.dart';
-import 'package:demo_srapp/constants/styles/paddings.dart';
-
+import 'package:demo_srapp/resources/resources.dart';
 import 'package:demo_srapp/view_models/app_theme_viewmodel.dart';
 import 'package:demo_srapp/view_models/auth_viewmodel.dart';
-import 'package:demo_srapp/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -18,32 +15,32 @@ class ProfilePage extends StatelessWidget {
 
     // Build
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-              image: appTheme.profileBackgroud,
-              fit: BoxFit.fitWidth,
-              alignment: Alignment.topCenter),
-        ),
-        padding: const EdgeInsets.symmetric(horizontal: CPaddings.xl),
-        child: SafeArea(
-          top: true,
-          bottom: true,
-          child: ListView(
-            shrinkWrap: true,
-            children: [
-              const ProfileHeader(),
-              const SizedBox(height: CPaddings.l),
-              //ProfileCard(),
-              const SizedBox(height: CPaddings.xl),
-              //ProfileWallet(),
-              const SizedBox(height: CPaddings.l),
-              //LoginButton(),
-              ElevatedButton(
-                  style: appTheme.themedButtonStyle,
-                  onPressed: () {},
-                  child: Text('Hi')),
-            ],
+      body: SizedBox.expand(
+        child: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+                image: appTheme.profileBackgroud,
+                fit: BoxFit.fitWidth,
+                alignment: Alignment.topCenter),
+          ),
+          padding: EdgeInsets.symmetric(
+              horizontal: Resources.of(context).dimensions.paddingXL),
+          child: SafeArea(
+            top: true,
+            bottom: true,
+            child: ListView(
+              shrinkWrap: true,
+              children: [
+                const ProfileHeader(),
+                SizedBox(height: Resources.of(context).dimensions.paddingL),
+                const ProfileCard(),
+                SizedBox(height: Resources.of(context).dimensions.paddingL),
+                //ProfileWallet(),
+                SizedBox(height: Resources.of(context).dimensions.paddingXL),
+                const LoginButton('4988800'),
+                const LoginButton('4988801'),
+              ],
+            ),
           ),
         ),
       ),
@@ -51,24 +48,30 @@ class ProfilePage extends StatelessWidget {
   }
 }
 
-/*
 class LoginButton extends StatelessWidget {
-  const LoginButton({Key? key}) : super(key: key);
+  final String pid;
+
+  const LoginButton(this.pid, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final appLogin = Provider.of<AuthViewModel>(context);
+    final appLogin = context.read<AuthViewModel>();
+    final appTheme = context.watch<AppThemeViewModel>();
 
     return ElevatedButton(
-      style: CustomStyle.buttonStyle(context),
-      onPressed: () {
-        appLogin.logout();
+      style: appTheme.themedButtonStyle,
+      onPressed: () async {
+        if (appLogin.patron == null) {
+          await appLogin.login(pid);
+        } else {
+          await appLogin.logout();
+        }
       },
-      child: const Text('Logout'),
+      child: Text(pid),
     );
   }
 }
-*/
+
 class ProfileHeader extends StatelessWidget {
   const ProfileHeader({Key? key}) : super(key: key);
 
@@ -76,17 +79,15 @@ class ProfileHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final appLogin = context.watch<AuthViewModel>();
     final appTheme = context.watch<AppThemeViewModel>();
-
-    const _textTitleStyle = TextStyle(fontSize: CFontSizes.xl);
-    const _textBodyStyle = TextStyle(fontSize: CFontSizes.l);
-    final _textBodyASG = AutoSizeGroup();
+    final bodyTextASG = AutoSizeGroup();
 
     return Column(children: [
       Row(
         children: [
-          CustomText(
+          AutoSizeText(
             appLogin.patron?.name ?? 'NOT LOGGED IN',
-            style: _textTitleStyle.copyWith(color: Colors.white),
+            style: appTheme.profileHeaderTitleTextStyle,
+            maxLines: 1,
           ),
         ],
       ),
@@ -95,36 +96,39 @@ class ProfileHeader extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            CustomText(
+            AutoSizeText(
               'No. ${appLogin.patron!.pid}',
-              style: _textBodyStyle.copyWith(color: Colors.grey),
-              group: _textBodyASG,
+              style: appTheme.profileHeaderBodyTextStyle,
+              group: bodyTextASG,
+              maxLines: 1,
             ),
-            CustomText(
+            AutoSizeText(
               'Valid until | ${appLogin.patron!.tierExpDate}',
-              style: _textBodyStyle.copyWith(color: Colors.grey),
-              group: _textBodyASG,
+              style: appTheme.profileHeaderBodyTextStyle,
+              group: bodyTextASG,
+              maxLines: 1,
             ),
           ],
         )
     ]);
   }
 }
-/*
+
 class ProfileCard extends StatelessWidget {
   const ProfileCard({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final appTheme = Provider.of<AppTheme>(context);
+    final appTheme = context.watch<AppThemeViewModel>();
 
     return ClipRRect(
-      borderRadius: BorderRadius.circular(CRadius.m),
-      child: Image.asset(appTheme.currentTheme.profileCardBackground),
+      borderRadius: Resources.of(context).dimensions.borderRadius,
+      child: Image(image: appTheme.profileCardBackgroud),
     );
   }
 }
 
+/*
 class ProfileWallet extends StatelessWidget {
   const ProfileWallet({Key? key}) : super(key: key);
 
