@@ -35,7 +35,9 @@ class ProfilePage extends StatelessWidget {
                 SizedBox(height: Resources.of(context).dimensions.paddingL),
                 const ProfileCard(),
                 SizedBox(height: Resources.of(context).dimensions.paddingL),
-                //ProfileWallet(),
+                const ProfileWallet(),
+                SizedBox(height: Resources.of(context).dimensions.paddingS),
+                const ProfileOffers(),
                 SizedBox(height: Resources.of(context).dimensions.paddingXL),
                 const LoginButton('4988800'),
                 const LoginButton('4988801'),
@@ -123,44 +125,40 @@ class ProfileCard extends StatelessWidget {
 
     return ClipRRect(
       borderRadius: Resources.of(context).dimensions.borderRadius,
-      child: Image(image: appTheme.profileCardBackgroud),
+      child: Image(image: appTheme.profileCardBackgroud, fit: BoxFit.cover),
     );
   }
 }
 
-/*
 class ProfileWallet extends StatelessWidget {
   const ProfileWallet({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final cardShape = RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(CRadius.m),
-    );
-
     return Row(
       children: [
         Expanded(
           flex: 1,
           child: Card(
-            shape: cardShape,
-            margin: const EdgeInsets.only(right: CPaddings.s),
+            shape: RoundedRectangleBorder(
+                borderRadius: Resources.of(context).dimensions.borderRadius),
             child: Padding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: CPaddings.xl, vertical: CPaddings.l),
-              child: Text('Hello'),
+              padding:
+                  EdgeInsets.all(Resources.of(context).dimensions.paddingL),
+              child: const Text('Hello'),
             ),
           ),
         ),
+        SizedBox(width: Resources.of(context).dimensions.paddingS),
         Expanded(
           flex: 1,
           child: Card(
-            shape: cardShape,
-            margin: const EdgeInsets.only(left: CPaddings.s),
+            shape: RoundedRectangleBorder(
+                borderRadius: Resources.of(context).dimensions.borderRadius),
             child: Padding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: CPaddings.xl, vertical: CPaddings.l),
-              child: Text('Hello'),
+              padding:
+                  EdgeInsets.all(Resources.of(context).dimensions.paddingL),
+              child: const Text('Hello'),
             ),
           ),
         ),
@@ -168,4 +166,22 @@ class ProfileWallet extends StatelessWidget {
     );
   }
 }
-*/
+
+class ProfileOffers extends StatelessWidget {
+  const ProfileOffers({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      shape: RoundedRectangleBorder(
+          borderRadius: Resources.of(context).dimensions.borderRadius),
+      child: Padding(
+        padding: EdgeInsets.all(Resources.of(context).dimensions.paddingL),
+        child: Row(children: [
+          Expanded(child: const Text('Hello')),
+          Expanded(child: const Text('Hello')),
+        ]),
+      ),
+    );
+  }
+}

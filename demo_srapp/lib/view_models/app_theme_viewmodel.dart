@@ -37,7 +37,6 @@ class AppThemeViewModel extends ChangeNotifier {
         return ThemeData.dark().copyWith(
           scaffoldBackgroundColor: _colorBlack,
           backgroundColor: _colorBlack,
-          primaryColor: _colorWhite,
         );
     }
   }
