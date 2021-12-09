@@ -1,5 +1,5 @@
 import 'package:demo_srapp/models/patron.dart';
-import 'package:demo_srapp/view_models/app_theme_viewmodel.dart';
+import 'package:demo_srapp/app_theme.dart';
 
 class Utils {
   // Convert Patron Tier to App Theme Type

@@ -1,7 +1,10 @@
-import 'package:demo_srapp/utils/utils.dart';
+import 'package:demo_srapp/data/auth_repository.dart';
 import 'package:demo_srapp/view_models/auth_viewmodel.dart';
-import 'package:demo_srapp/view_models/app_theme_viewmodel.dart';
+import 'package:demo_srapp/app_theme.dart';
+import 'package:demo_srapp/views/router/app_backbutton_dispatcher.dart';
+import 'package:demo_srapp/views/router/app_pages.dart';
 import 'package:demo_srapp/views/router/app_router_delegate.dart';
+import 'package:demo_srapp/views/router/app_router_information_parser.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -19,38 +22,36 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  AuthRepository authRepository = AuthRepository();
   late AppRouterDelegate delegate;
+  late AppRouterInformationParser appRouterInformationParser;
+  late AppBackButtonDispactcher appBackButtonDispactcher;
 
   @override
   void initState() {
     super.initState();
+    authRepository;
     delegate = AppRouterDelegate();
+    appRouterInformationParser = AppRouterInformationParser();
+    appBackButtonDispactcher = AppBackButtonDispactcher(delegate);
   }
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<AuthViewModel>(create: (_) => AuthViewModel()),
-        ChangeNotifierProxyProvider<AuthViewModel, AppThemeViewModel>(
-          create: (BuildContext context) => AppThemeViewModel(
-              appThemeType: Utils.mapPatronTierTheme(
-                  Provider.of<AuthViewModel>(context, listen: false)
-                      .patron
-                      ?.tier)),
-          update: (BuildContext context, AuthViewModel auth,
-                  AppThemeViewModel? appTheme) =>
-              AppThemeViewModel(
-                  appThemeType: Utils.mapPatronTierTheme(auth.patron?.tier)),
-        ),
+        ChangeNotifierProvider<AppTheme>(create: (_) => AppTheme()),
+        ChangeNotifierProvider<AuthViewModel>(
+            create: (_) => AuthViewModel(authRepository)),
       ],
       builder: (context, child) {
         return MaterialApp(
           title: 'SR App - Prototype',
-          theme: Provider.of<AppThemeViewModel>(context).themeData,
+          theme: Provider.of<AppTheme>(context).themeData,
           home: Router(
             routerDelegate: delegate,
-            backButtonDispatcher: RootBackButtonDispatcher(),
+            routeInformationParser: appRouterInformationParser,
+            backButtonDispatcher: appBackButtonDispactcher,
           ),
         );
       },

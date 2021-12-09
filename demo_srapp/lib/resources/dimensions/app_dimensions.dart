@@ -13,6 +13,8 @@ class AppDimensions implements IDimensions {
   double get paddingL => 12.0;
   @override
   double get paddingXL => 20.0;
+  @override
+  double get paddingXXL => 40.0;
 
   //Elevation
   @override

@@ -1,17 +1,15 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:demo_srapp/resources/resources.dart';
-import 'package:demo_srapp/view_models/app_theme_viewmodel.dart';
-import 'package:demo_srapp/view_models/auth_viewmodel.dart';
+import 'package:demo_srapp/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ProfilePage extends StatelessWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+class ProfileView extends StatelessWidget {
+  const ProfileView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     // App State
-    final appTheme = context.watch<AppThemeViewModel>();
+    final appTheme = context.watch<AppTheme>();
 
     // Build
     return Scaffold(
@@ -31,16 +29,14 @@ class ProfilePage extends StatelessWidget {
             child: ListView(
               shrinkWrap: true,
               children: [
-                const ProfileHeader(),
+                //const _ProfileHeader(),
                 SizedBox(height: Resources.of(context).dimensions.paddingL),
-                const ProfileCard(),
+                const _ProfileCard(),
                 SizedBox(height: Resources.of(context).dimensions.paddingL),
-                const ProfileWallet(),
+                const _ProfileWallet(),
                 SizedBox(height: Resources.of(context).dimensions.paddingS),
-                const ProfileOffers(),
+                const _ProfileOffers(),
                 SizedBox(height: Resources.of(context).dimensions.paddingXL),
-                const LoginButton('4988800'),
-                const LoginButton('4988801'),
               ],
             ),
           ),
@@ -50,62 +46,39 @@ class ProfilePage extends StatelessWidget {
   }
 }
 
-class LoginButton extends StatelessWidget {
-  final String pid;
-
-  const LoginButton(this.pid, {Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final appLogin = context.read<AuthViewModel>();
-    final appTheme = context.watch<AppThemeViewModel>();
-
-    return ElevatedButton(
-      style: appTheme.themedButtonStyle,
-      onPressed: () async {
-        if (appLogin.patron == null) {
-          await appLogin.login(pid);
-        } else {
-          await appLogin.logout();
-        }
-      },
-      child: Text(pid),
-    );
-  }
-}
-
-class ProfileHeader extends StatelessWidget {
-  const ProfileHeader({Key? key}) : super(key: key);
+/*
+class _ProfileHeader extends StatelessWidget {
+  const _ProfileHeader({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final appLogin = context.watch<AuthViewModel>();
-    final appTheme = context.watch<AppThemeViewModel>();
+    final appState = context.watch<AppState>();
+    final appTheme = context.watch<AppTheme>();
     final bodyTextASG = AutoSizeGroup();
 
     return Column(children: [
       Row(
         children: [
           AutoSizeText(
-            appLogin.patron?.name ?? 'NOT LOGGED IN',
+            appState.loggedInPatronName,
             style: appTheme.profileHeaderTitleTextStyle,
             maxLines: 1,
           ),
         ],
       ),
       const SizedBox(height: 5),
-      if (appLogin.patron != null)
+      if (appState.loggedIn)
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             AutoSizeText(
-              'No. ${appLogin.patron!.pid}',
+              'No. ${appState.loggedInPatronID}',
               style: appTheme.profileHeaderBodyTextStyle,
               group: bodyTextASG,
               maxLines: 1,
             ),
             AutoSizeText(
-              'Valid until | ${appLogin.patron!.tierExpDate}',
+              'Valid until |',
               style: appTheme.profileHeaderBodyTextStyle,
               group: bodyTextASG,
               maxLines: 1,
@@ -115,13 +88,14 @@ class ProfileHeader extends StatelessWidget {
     ]);
   }
 }
+*/
 
-class ProfileCard extends StatelessWidget {
-  const ProfileCard({Key? key}) : super(key: key);
+class _ProfileCard extends StatelessWidget {
+  const _ProfileCard({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final appTheme = context.watch<AppThemeViewModel>();
+    final appTheme = context.watch<AppTheme>();
 
     return ClipRRect(
       borderRadius: Resources.of(context).dimensions.borderRadius,
@@ -130,8 +104,8 @@ class ProfileCard extends StatelessWidget {
   }
 }
 
-class ProfileWallet extends StatelessWidget {
-  const ProfileWallet({Key? key}) : super(key: key);
+class _ProfileWallet extends StatelessWidget {
+  const _ProfileWallet({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -167,8 +141,8 @@ class ProfileWallet extends StatelessWidget {
   }
 }
 
-class ProfileOffers extends StatelessWidget {
-  const ProfileOffers({Key? key}) : super(key: key);
+class _ProfileOffers extends StatelessWidget {
+  const _ProfileOffers({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

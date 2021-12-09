@@ -1,5 +1,6 @@
-abstract class AssetsPath {
+abstract class AssetPaths {
   static const appLogo = 'assets/scl_logo.png';
+  static const appBackground = 'assets/login/login_bg.jpg';
 
   // Profile Backgroud
   static const profileBackgroundGold = 'assets/profile/bg_gold.png';

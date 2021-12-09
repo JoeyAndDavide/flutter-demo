@@ -1,19 +1,21 @@
-import 'package:demo_srapp/constants/assets_path.dart';
+import 'package:demo_srapp/app_state.dart';
+import 'package:demo_srapp/constants/asset_paths.dart';
 import 'package:flutter/material.dart';
 
 enum AppThemeType { gold1, apex }
 
-class AppThemeViewModel extends ChangeNotifier {
-  AppThemeType? appThemeType;
+class AppTheme extends ChangeNotifier {
+  final AppState appState = AppState();
 
-  AppThemeViewModel({this.appThemeType});
+  AppTheme() {
+    appState.addListener(() {
+      notifyListeners();
+    });
+  }
 
   // Contants
   static const Color _colorGold1 = Color(0xFFBDA266);
-  static const Color _colorGold2 = Color(0xFFCBAE7D);
-  static const Color _colorGold3 = Color(0xFFFFD078);
   static const Color _colorGrey1 = Color(0xFFECECEC);
-  static const Color _colorGrey2 = Color(0xFF9E9E9E);
   static const Color _colorWhite = Colors.white;
   static const Color _colorBlack = Colors.black;
 
@@ -26,7 +28,7 @@ class AppThemeViewModel extends ChangeNotifier {
 
   // ThemeData
   ThemeData get themeData {
-    switch (appThemeType ?? AppThemeType.gold1) {
+    switch (appState.appThemeType) {
       case AppThemeType.gold1:
         return ThemeData.light().copyWith(
           scaffoldBackgroundColor: _colorGrey1,
@@ -44,23 +46,28 @@ class AppThemeViewModel extends ChangeNotifier {
   // Colors
   Color get buttonActiveColor => _colorGold1;
   Color get buttonInactiveColor => _colorGrey1;
+  Color get loadingIconColor => _colorGold1;
 
   // Assets
+  AssetImage get appBackground {
+    return const AssetImage(AssetPaths.appBackground);
+  }
+
   AssetImage get profileBackgroud {
-    switch (appThemeType ?? AppThemeType.gold1) {
+    switch (appState.appThemeType) {
       case AppThemeType.gold1:
-        return const AssetImage(AssetsPath.profileBackgroundGold);
+        return const AssetImage(AssetPaths.profileBackgroundGold);
       case AppThemeType.apex:
-        return const AssetImage(AssetsPath.profileBackgroundApex);
+        return const AssetImage(AssetPaths.profileBackgroundApex);
     }
   }
 
   AssetImage get profileCardBackgroud {
-    switch (appThemeType ?? AppThemeType.gold1) {
+    switch (appState.appThemeType) {
       case AppThemeType.gold1:
-        return const AssetImage(AssetsPath.profileCardBackgroundGold);
+        return const AssetImage(AssetPaths.profileCardBackgroundGold);
       case AppThemeType.apex:
-        return const AssetImage(AssetsPath.profileCardBackgroundApex);
+        return const AssetImage(AssetPaths.profileCardBackgroundApex);
     }
   }
 

@@ -7,6 +7,7 @@ abstract class IDimensions {
   double get paddingM;
   double get paddingL;
   double get paddingXL;
+  double get paddingXXL;
 
   //Elevation
   double get elevationLight;
