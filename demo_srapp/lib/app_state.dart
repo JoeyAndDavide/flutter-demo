@@ -23,18 +23,14 @@ class AppState extends ChangeNotifier {
     _nextAppPageAction = AppPageAction();
   }
 
-  bool _loggedIn = false;
-  bool get loggedIn => _loggedIn;
   AppThemeType? _appThemeType;
   AppThemeType get appThemeType => _appThemeType ?? AppThemeType.gold1;
   setLoggedInAndAppTheme(AppThemeType appThemeType) {
-    _loggedIn = true;
     _appThemeType = appThemeType;
     notifyListeners();
   }
 
   setLoggedOut() {
-    _loggedIn = false;
     _appThemeType = null;
     notifyListeners();
   }

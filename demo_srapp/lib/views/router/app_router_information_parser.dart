@@ -10,15 +10,18 @@ class AppRouterInformationParser
 
     if (uri.pathSegments.isNotEmpty) {
       final path = '/' + uri.pathSegments[0];
-      if (path == AppPageCollection.loginPageCofig.path) {
-        return AppPageCollection.loginPageCofig;
+      if (path == AppPageCollection.splashPageConfig.path) {
+        return AppPageCollection.splashPageConfig;
       }
-      if (path == AppPageCollection.profilePageCofig.path) {
-        return AppPageCollection.profilePageCofig;
+      if (path == AppPageCollection.loginPageConfig.path) {
+        return AppPageCollection.loginPageConfig;
+      }
+      if (path == AppPageCollection.profilePageConfig.path) {
+        return AppPageCollection.profilePageConfig;
       }
     }
 
-    return AppPageCollection.loginPageCofig;
+    return AppPageCollection.splashPageConfig;
   }
 
   @override

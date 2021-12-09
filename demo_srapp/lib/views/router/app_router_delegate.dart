@@ -80,7 +80,7 @@ class AppRouterDelegate extends RouterDelegate<AppPageConfiguration>
 
   List<Page> _buildPages() {
     if (_pages.isEmpty) {
-      _addPage(AppPageCollection.loginPageCofig);
+      _addPage(AppPageCollection.splashPageConfig);
     } else {
       switch (appState.nextAppPageAction.action) {
         case AppPageActions.none:

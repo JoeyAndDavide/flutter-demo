@@ -49,7 +49,7 @@ class LoginView extends StatelessWidget {
                           await authViewModel.login('4988800');
                           appState.nextAppPageAction = AppPageAction(
                               action: AppPageActions.replaceAll,
-                              pages: [AppPageCollection.profilePageCofig]);
+                              pages: [AppPageCollection.profilePageConfig]);
                         },
                         child: const Text('Gold 1'),
                       ),
