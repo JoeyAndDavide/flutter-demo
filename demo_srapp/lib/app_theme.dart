@@ -1,17 +1,17 @@
-import 'package:demo_srapp/app_state.dart';
 import 'package:demo_srapp/constants/asset_paths.dart';
 import 'package:flutter/material.dart';
 
 enum AppThemeType { gold1, apex }
 
 class AppTheme extends ChangeNotifier {
-  final AppState appState = AppState();
-
-  AppTheme() {
-    appState.addListener(() {
-      notifyListeners();
-    });
+  AppThemeType? _appThemeType;
+  AppThemeType get appThemeType => _appThemeType ?? AppThemeType.gold1;
+  set appThemeType(value) {
+    _appThemeType = value;
+    notifyListeners();
   }
+
+  AppTheme(this._appThemeType);
 
   // Contants
   static const Color _colorGold1 = Color(0xFFBDA266);
@@ -25,10 +25,11 @@ class AppTheme extends ChangeNotifier {
   static const double _fontSizeM = 8.0;
   static const double _fontSizeL = 15.0;
   static const double _fontSizeXL = 20.0;
+  static const double _fontSizeXXL = 30.0;
 
   // ThemeData
   ThemeData get themeData {
-    switch (appState.appThemeType) {
+    switch (appThemeType) {
       case AppThemeType.gold1:
         return ThemeData.light().copyWith(
           scaffoldBackgroundColor: _colorGrey1,
@@ -54,7 +55,7 @@ class AppTheme extends ChangeNotifier {
   }
 
   AssetImage get profileBackgroud {
-    switch (appState.appThemeType) {
+    switch (appThemeType) {
       case AppThemeType.gold1:
         return const AssetImage(AssetPaths.profileBackgroundGold);
       case AppThemeType.apex:
@@ -63,7 +64,7 @@ class AppTheme extends ChangeNotifier {
   }
 
   AssetImage get profileCardBackgroud {
-    switch (appState.appThemeType) {
+    switch (appThemeType) {
       case AppThemeType.gold1:
         return const AssetImage(AssetPaths.profileCardBackgroundGold);
       case AppThemeType.apex:
@@ -91,4 +92,7 @@ class AppTheme extends ChangeNotifier {
 
   TextStyle get profileHeaderBodyTextStyle =>
       const TextStyle(fontSize: _fontSizeL, color: _colorGrey1);
+
+  TextStyle get unknownPageBodyTextStyle =>
+      const TextStyle(fontSize: _fontSizeXXL, color: _colorWhite);
 }

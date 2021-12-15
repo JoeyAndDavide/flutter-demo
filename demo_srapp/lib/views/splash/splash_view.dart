@@ -1,6 +1,5 @@
 import 'package:demo_srapp/app_theme.dart';
 import 'package:demo_srapp/resources/resources.dart';
-import 'package:demo_srapp/view_models/auth_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -9,15 +8,11 @@ class SplashView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // App State
-    final appTheme = context.watch<AppTheme>();
-    final authViewModel = context.watch<AuthViewModel>();
-
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: appTheme.appBackground,
+            image: context.watch<AppTheme>().appBackground,
             fit: BoxFit.cover,
           ),
         ),
